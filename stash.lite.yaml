@@ -1,3 +1,17 @@
+# zzoxee.yaml
+# Update:2022.7
+# ------------------
+# 图标库：https://github.com/namelessup/Koolson-Qure
+# ------------------
+# 下载配置后，需要自行添加机场订阅链接;
+# 找到 #远程订阅(代理集合) 部分，将 MyProxy 部分的 url 链接地址更换为自己的机场订阅链接;
+# 此处推荐使用Sub-Store订阅链接，多机场用户可以将多个机场订阅整合为一个 Sub-Store 订阅;
+# ------------------
+# 以上需要用到教程的话，请自行google;
+# 本配置文件不保证不报错，有错自行调整修改;
+# ------------------
+# ※※※-----感谢Github-blackmatrix7大佬------※※※
+
 mixed-port: 7890
 allow-lan: true
 bind-address: '*'
@@ -34,18 +48,22 @@ dns:
   - '*.blzstatic.cn'
   - '*.battle.net'
 
+#本地代理
 proxies:
 
-proxy-providers:
-  MyProxy:
-    url: https://sub.store/download/collection/Leo
+#远程订阅(代理集合)
+proxy-providers:    
+  MyProxy: #建立锚点
+    url: https://sub.store/download/collection/subs #多机场用户请使用Sub-Store生成自己的订阅地址并替换以下url地址
     interval: 86400
     health-check:
       enable: true
       interval: 3600
       url: http://cp.cloudflare.com/generate_204
 
+#策略组
 proxy-groups:
+
 - name: Server Strategy
   type: select
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
@@ -55,67 +73,85 @@ proxy-groups:
   - LoadBalance
   - Fallback
   - DIRECT
+
 - name: Proxy
   type: select
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+
 - name: Auto
   type: url-test
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
   url: "http://www.gstatic.com/generate_204"
   interval: 300
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
+
 - name: LoadBalance
   type: load-balance
   strategy: consistent-hashing
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bypass.png
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
+
 - name: Fallback
   type: fallback
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
   url: 'http://www.gstatic.com/generate_204'
   interval: 300
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
+
+ #美国节点
 - name: US
   type: select
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
   filter: "美|美国|\U0001F1FA\U0001F1F8|US|us"
+ 
+ #香港节点
 - name: HK
   type: select
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
   filter: "HK|香港|港|\U0001F1ED\U0001F1F0|Hongkong|Hong Kong"
+
+ #日本节点
 - name: JP
   type: select
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
   filter: "日|日本|东京|\U0001F1EF\U0001F1F5|JP|Japan"
+
+ #台湾节点
 - name: TW
   type: select
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
   filter: "台|台湾|TW|taiwan|Taiwan"
+ 
+ #新加坡节点
 - name: SG
   type: select
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
   filter: "城|新|新加坡|\U0001F1F8\U0001F1EC|SG|Singapore"
+
+ #其他节点
 - name: OTHER
   type: select
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ULB.png
   use:
-  - MyProxy
+  - MyProxy #引用锚点内容
   filter: "^(?!.*(?:\U0001F1ED\U0001F1F0|\U0001F1EF\U0001F1F5|\U0001F1FA\U0001F1F8|\U0001F1F8\U0001F1EC|\U0001F1E8\U0001F1F3|广停|广东|中国|国内|China|香港|hk|HK|hongkong|台|台湾|TW|taiwan|Taiwan|日本|jp|JP|新加坡|sg|SG|美国|US)).*"
+
+
 - name: Global
   type: select
   proxies:
@@ -363,6 +399,8 @@ proxy-groups:
   - DIRECT
   - Server Strategy
   icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+  
+#远程规则集合声明
 rule-providers:
   Ad:
     behavior: classical
@@ -476,6 +514,8 @@ rule-providers:
     interval: 86400
     name: Outside
     url: https://github.com/QuentinHsu/network-rules/blob/release/Clash/ACL4SSR-Proxy.yaml?raw=true
+    
+#分流规则引用
 rules:
 - DOMAIN,api.waqi.info,LoadBalance
 - RULE-SET,Ad,AdBlock
