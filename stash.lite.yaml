@@ -1,0 +1,500 @@
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: Rule
+log-level: silent
+external-controller: 127.0.0.1:9090
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  default-nameserver:
+  - 119.29.29.29
+  - 119.28.28.28
+  - 223.5.5.5
+  - 114.114.114.114
+  nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.dns.sb/dns-query
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+  - '*.lan'
+  - localhost.ptlogin2.qq.com
+  - '+.srv.nintendo.net'
+  - '+.stun.playstation.net'
+  - '+.msftconnecttest.com'
+  - '+.msftncsi.com'
+  - '+.xboxlive.com'
+  - 'msftconnecttest.com'
+  - 'xbox.*.microsoft.com'
+  - '*.battlenet.com.cn'
+  - '*.battlenet.com'
+  - '*.blzstatic.cn'
+  - '*.battle.net'
+proxies:
+proxy-providers:
+  MyProxy:
+    url: https://sub.store/download/collection/Leo
+    interval: 86400
+    health-check:
+      enable: true
+      interval: 3600
+      url: http://cp.cloudflare.com/generate_204
+proxy-groups:
+- name: Server Strategy
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
+  proxies:
+  - Proxy
+  - Auto
+  - LoadBalance
+  - Fallback
+  - DIRECT
+- name: Proxy
+  type: select
+  use:
+  - MyProxy
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+- name: Auto
+  type: url-test
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+  url: "http://www.gstatic.com/generate_204"
+  interval: 300
+  use:
+  - MyProxy
+- name: LoadBalance
+  type: load-balance
+  strategy: consistent-hashing
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bypass.png
+  use:
+  - MyProxy
+- name: Fallback
+  type: fallback
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
+  url: 'http://www.gstatic.com/generate_204'
+  interval: 300
+  use:
+  - MyProxy
+- name: US
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+  use:
+  - MyProxy
+  filter: "美|美国|\U0001F1FA\U0001F1F8|US|us"
+- name: HK
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+  use:
+  - MyProxy
+  filter: "HK|香港|港|\U0001F1ED\U0001F1F0|Hongkong|Hong Kong"
+- name: JP
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+  use:
+  - MyProxy
+  filter: "日|日本|东京|\U0001F1EF\U0001F1F5|JP|Japan"
+- name: TW
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+  use:
+  - MyProxy
+  filter: "台|台湾|TW|taiwan|Taiwan"
+- name: SG
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+  use:
+  - MyProxy
+  filter: "城|新|新加坡|\U0001F1F8\U0001F1EC|SG|Singapore"
+- name: OTHER
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ULB.png
+  use:
+  - MyProxy
+  filter: "^(?!.*(?:\U0001F1ED\U0001F1F0|\U0001F1EF\U0001F1F5|\U0001F1FA\U0001F1F8|\U0001F1F8\U0001F1EC|\U0001F1E8\U0001F1F3|广停|广东|中国|国内|China|香港|hk|HK|hongkong|台|台湾|TW|taiwan|Taiwan|日本|jp|JP|新加坡|sg|SG|美国|US)).*"
+- name: Global
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+- name: GlobalMedia
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png
+- name: Netflix
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+- name: Disney+
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png
+- name: HBO
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/HBO.png
+- name: PrimeVideo
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Prime_Video.png
+- name: Youtube
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+- name: Spotify
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+- name: TikTok
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+- name: Bilibili
+  type: select
+  proxies:
+  - HK
+  - TW
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
+- name: Telegram
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+- name: Twitter
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+- name: PayPal
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+- name: TestFlight
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TestFlight_2.png
+- name: Apple
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+- name: Google
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+- name: Microsoft
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+- name: Weibo
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Weibo.png
+- name: Mainland
+  type: select
+  proxies:
+  - US
+  - HK
+  - JP
+  - TW
+  - SG
+  - OTHER
+  - Server Strategy
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
+- name: AdBlock
+  type: select
+  proxies:
+  - REJECT
+  - DIRECT
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png
+- name: Privacy
+  type: select
+  icon: https://github.com/Koolson/Qure/blob/master/IconSet/Color/Lock.png?raw=true
+  proxies:
+  - REJECT
+  - DIRECT
+- name: Hijacking
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png
+  proxies:
+  - REJECT
+  - DIRECT
+- name: Final
+  type: select
+  proxies:
+  - DIRECT
+  - Server Strategy
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+rule-providers:
+  Ad:
+    behavior: classical
+    interval: 86400
+    type: http
+    path: ./ruleset/Ad.yaml
+    url: https://github.com/QuentinHsu/network-rules/blob/release/Clash/DivineEngine-AD.yaml?raw=true
+  Privacy-rules:
+    behavior: classical
+    interval: 86400
+    type: http
+    url: https://github.com/QuentinHsu/network-rules/blob/release/Clash/DivineEngine-Privacy.yaml?raw=true
+    path: ./ruleset/privacy.yaml
+  Hijacking-rules:
+    behavior: classical
+    interval: 86400
+    name: Hijacking
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hijacking/Hijacking.yaml
+  Netflix-rules:
+    behavior: classical
+    interval: 86400
+    name: Netflix
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml
+  Disney-rules:
+    behavior: classical
+    interval: 86400
+    name: Disney
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.yaml
+  HBO-rules:
+    behavior: classical
+    interval: 86400
+    name: HBO
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/HBO/HBO.yaml
+  Youtube-rules:
+    behavior: classical
+    interval: 86400
+    name: Youtube
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml
+  PrimeVideo-rules:
+    behavior: classical
+    interval: 86400
+    name: PrimeVideo
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrimeVideo/PrimeVideo.yaml
+  Spotify-rules:
+    behavior: classical
+    interval: 86400
+    name: Spotify
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml
+  TikTok-rules:
+    behavior: classical
+    interval: 86400
+    name: TikTok
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml
+  Bilibili-rules:
+    behavior: classical
+    interval: 86400
+    name: Bilibili
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml
+  Telegram-rules:
+    behavior: classical
+    interval: 86400
+    name: Telegram
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml
+  Twitter-rules:
+    behavior: classical
+    interval: 86400
+    name: Twitter
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml
+  PayPal-rules:
+    behavior: classical
+    interval: 86400
+    name: PayPal
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PayPal/PayPal.yaml
+  TestFlight-rules:
+    behavior: classical
+    interval: 86400
+    name: TestFlight
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TestFlight/TestFlight.yaml
+  Apple-rules:
+    behavior: classical
+    interval: 86400
+    name: Apple
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml
+  Google-rules:
+    behavior: classical
+    interval: 86400
+    name: Google
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
+  Microsoft-rules:
+    behavior: classical
+    interval: 86400
+    name: Microsoft
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml
+  Weibo-rules:
+    behavior: classical
+    interval: 86400
+    name: Weibo
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Weibo/Weibo.yaml
+  Mainland-rules:
+    behavior: classical
+    interval: 86400
+    name: Mainland
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.yaml
+  MainlandIP-rules:
+    behavior: ipcidr
+    interval: 86400
+    name: MainlandIP
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs_IP.yaml
+  Global-rules:
+    behavior: classical
+    interval: 86400
+    name: Outside
+    url: https://github.com/QuentinHsu/network-rules/blob/release/Clash/ACL4SSR-Proxy.yaml?raw=true
+rules:
+- DOMAIN,api.waqi.info,LoadBalance
+- RULE-SET,Ad,AdBlock
+- RULE-SET,Privacy-rules,Privacy
+- RULE-SET,Hijacking-rules,Hijacking
+- RULE-SET,Netflix-rules,Netflix
+- RULE-SET,Disney-rules,Disney+
+- RULE-SET,HBO-rules,HBO
+- RULE-SET,Youtube-rules,Youtube
+- RULE-SET,PrimeVideo-rules,PrimeVideo
+- RULE-SET,Spotify-rules,Spotify
+- RULE-SET,TikTok-rules,TikTok
+- RULE-SET,Bilibili-rules,Bilibili
+- RULE-SET,Telegram-rules,Telegram
+- RULE-SET,Twitter-rules,Twitter
+- RULE-SET,PayPal-rules,PayPal
+- RULE-SET,TestFlight-rules,TestFlight
+- RULE-SET,Apple-rules,Apple
+- RULE-SET,Google-rules,Google
+- RULE-SET,Microsoft-rules,Microsoft
+- RULE-SET,Weibo-rules,Weibo
+- RULE-SET,Global-rules,Global
+- RULE-SET,Mainland-rules,Mainland
+- RULE-SET,MainlandIP-rules,Mainland
+- GEOIP,CN,DIRECT
+- MATCH,Final
+subscribe-url: 
