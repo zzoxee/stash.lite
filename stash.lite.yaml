@@ -142,6 +142,14 @@ proxy-groups:
   use:
   - MyProxy #引用锚点内容
   filter: "城|新|新加坡|\U0001F1F8\U0001F1EC|SG|Singapore"
+  
+ #韩国节点
+- name: KR
+  type: select
+  icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+  use:
+  - MyProxy #引用锚点内容
+  filter: "韩|韩国|KR|Korea"
 
  #其他节点
 - name: OTHER
@@ -160,6 +168,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -172,6 +181,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -184,6 +194,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -196,6 +207,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -208,6 +220,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -220,6 +233,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -232,6 +246,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -244,6 +259,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -256,6 +272,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -275,6 +292,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -287,6 +305,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -299,6 +318,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -311,6 +331,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -323,6 +344,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -335,6 +357,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -347,6 +370,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -359,6 +383,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
@@ -371,6 +396,7 @@ proxy-groups:
   - JP
   - TW
   - SG
+  - KR
   - OTHER
   - Server Strategy
   - DIRECT
